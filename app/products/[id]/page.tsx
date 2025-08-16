@@ -7,7 +7,13 @@ import ProductClient from "./ProductClient";
 
 // type Params = { id: string | number };
 
-export const generateMetadata = async ({ params }: any) => {
+type Params = { id: string };
+
+interface PageProps {
+    params: Params;
+}
+
+export const generateMetadata = async ({ params }: PageProps) => {
     const product = await getProduct(params.id);
 
     return {
@@ -21,7 +27,7 @@ export const generateMetadata = async ({ params }: any) => {
     };
 }
 
-export default async function ProductPage({ params }: any) {
+export default async function ProductPage({ params }: PageProps) {
     const queryClient = new QueryClient();
 
     await queryClient.prefetchQuery({
