@@ -3,18 +3,15 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import { title } from "process";
 import ProductClient from "./ProductClient";
 
-// type Props = { params: { id: string | number } };
-
-// type Params = { id: string | number };
-
 type Params = { id: string };
 
 interface PageProps {
-    params: Params;
+    params: Promise<Params>;
 }
 
 export const generateMetadata = async ({ params }: PageProps) => {
-    const product = await getProduct(params.id);
+    const resolvedParams = await params;
+    const product = await getProduct(resolvedParams.id);
 
     return {
         title: `${product.title} | Shop `,
@@ -28,16 +25,17 @@ export const generateMetadata = async ({ params }: PageProps) => {
 }
 
 export default async function ProductPage({ params }: PageProps) {
+    const resolvedParams = await params;
     const queryClient = new QueryClient();
 
     await queryClient.prefetchQuery({
-        queryKey: ["product", params.id],
-        queryFn: () => getProduct(params.id)
+        queryKey: ["product", resolvedParams.id],
+        queryFn: () => getProduct(resolvedParams.id)
     });
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
-            <ProductClient id={params.id} />
+            <ProductClient id={resolvedParams.id} />
         </HydrationBoundary>
     )
 }
