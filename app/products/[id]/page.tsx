@@ -5,9 +5,9 @@ import ProductClient from "./ProductClient";
 
 // type Props = { params: { id: string | number } };
 
-type Params = { id: string | number };
+// type Params = { id: string | number };
 
-export const generateMetadata = async ({ params }: { params: Params }) => {
+export const generateMetadata = async ({ params }: any) => {
     const product = await getProduct(params.id);
 
     return {
@@ -21,7 +21,7 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
     };
 }
 
-export default async function ProductPage({ params }: { params: Params }) {
+export default async function ProductPage({ params }: any) {
     const queryClient = new QueryClient();
 
     await queryClient.prefetchQuery({
