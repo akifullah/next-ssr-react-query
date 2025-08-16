@@ -3,9 +3,9 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import { title } from "process";
 import ProductClient from "./ProductClient";
 
-type Props = { params: { id: string | number } };
+// type Props = { params: { id: string | number } };
 
-export const generateMetadata = async ({ params }: Props)=>{
+export const generateMetadata = async ({ params }: any)=>{
     const product = await getProduct(params.id);
 
     return {
