@@ -3,7 +3,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import { title } from "process";
 import ProductClient from "./ProductClient";
 
-type Params = { id: string };
+type Params = { id: string | number };
 
 interface PageProps {
     params: Promise<Params>;
